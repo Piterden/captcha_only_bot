@@ -17,6 +17,7 @@ const {
 } = require('@/middlewares')
 
 const {
+  hearsHandler,
   newChatMemberHandler,
   leftChatMemberHandler,
 } = require('@/handlers')
@@ -45,6 +46,7 @@ bot.use(debugMiddleware())
 /**
  * Handlers
  */
+bot.hears(/[\S\s]*/, hearsHandler())
 bot.on('new_chat_members', newChatMemberHandler())
 bot.on('left_chat_member', leftChatMemberHandler())
 

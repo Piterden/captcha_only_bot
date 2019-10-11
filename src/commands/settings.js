@@ -20,8 +20,9 @@ module.exports = () => async (ctx) => {
 
   ctx.session.edit = 'captcha'
 
-  const [chat] = await ctx.database('groups')
+  const chat = await ctx.database('groups')
     .where({ id: Number(ctx.chat.id) })
+    .first()
     .catch(errorHandler)
   let { config } = chat
 
@@ -31,9 +32,9 @@ module.exports = () => async (ctx) => {
   const buttons = settingsButtons(ctx)
   const { message_id: id } = await ctx.reply(
     `Captcha settings for this chat:
-${Object.keys(configMap.captcha).map((key) => `
-*${configMap.captcha[key].name}:*
-_${config.captcha[key]}_`).join('\n')}
+${Object.keys(configMap[ctx.session.edit]).map((key) => `
+*${configMap[ctx.session.edit][key].name}:*
+_${config[ctx.session.edit][key]}_`).join('\n')}
 
 Choose an option to edit:`,
     {

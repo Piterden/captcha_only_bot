@@ -9,7 +9,7 @@ module.exports = (ctx) => {
       configMap[ctx.session.edit][key].name,
       `settings=captcha&field=${key}`
     )
-  )).reduce((acc, cur, idx) => {
+  )).reduceRight((acc, cur, idx) => {
     const index = parseInt(idx / 2, 10)
 
     acc[index] = acc[index] || []

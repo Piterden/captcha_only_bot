@@ -43,7 +43,7 @@ module.exports = () => async (ctx, next) => {
       ctx.chat.id,
       ctx.session.messages[0],
       undefined,
-      settingsMessage(ctx),
+      settingsMessage(ctx, configMap, ctx.session.new),
       {
         ...Markup.inlineKeyboard(buttons).extra(),
         parse_mode: 'Markdown',
