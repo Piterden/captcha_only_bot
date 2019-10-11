@@ -5,8 +5,9 @@ module.exports = () => async (ctx, next) => {
     return next()
   }
 
-  let [user] = await ctx.database('users')
+  let user = await ctx.database('users')
     .where({ id: Number(ctx.from.id) })
+    .first()
     .catch(errorHandler)
   const date = new Date()
 
@@ -30,10 +31,11 @@ module.exports = () => async (ctx, next) => {
       await ctx.database('users')
         .where({ id: Number(ctx.from.id) })
         .update(fields)
-        .catch(errorHandler);
+        .catch(errorHandler)
 
-      [user] = await ctx.database('users')
+      user = await ctx.database('users')
         .where({ id: Number(ctx.from.id) })
+        .first()
         .catch(errorHandler)
     }
 
