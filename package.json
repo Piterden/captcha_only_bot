@@ -1,0 +1,45 @@
+{
+  "name": "captcha_only_bot",
+  "version": "0.0.2",
+  "description": "Bot admin captcha",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "watch": "pm2 start --watch . -n captc src/index.js",
+    "lint": "eslint --ext .js .",
+    "lint:fix": "eslint --ext .js --fix .",
+    "migrate": "npm run migrate:up",
+    "migrate:up": "knex migrate:latest",
+    "migrate:down": "knex migrate:rollback",
+    "migrate:refresh": "knex migrate:rollback && knex migrate:latest"
+  },
+  "author": "Denis Efremov <efremov.a.denis@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "knex": "^0.19.4",
+    "module-alias": "^2.2.1",
+    "mysql": "^2.17.1",
+    "telegraf": "^3.32.0"
+  },
+  "devDependencies": {
+    "@atomix/eslint-config": "^7.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-unicorn": "^7.0.0",
+    "husky": "^2.7.0",
+    "prettier": "^1.18.2"
+  },
+  "_moduleAliases": {
+    "@": "./src"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  }
+}
