@@ -1,7 +1,7 @@
 const startCommand = require('./start')
-const captchaCommand = require('./captcha')
+const settingsCommand = require('./settings')
 
 module.exports = {
   startCommand,
-  captchaCommand,
+  settingsCommand,
 }

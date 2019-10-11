@@ -68,7 +68,7 @@ module.exports = () => async (ctx) => {
       ? `@${username.replace(/([_*~])/g, '\\$1')}`
       : `[${firstName || lastName}](tg://user?id=${id})`
     const buttons = config.captcha.buttons.split('\n').map((button, index) => (
-      Markup.callbackButton(button, `${index ? 'kick' : 'pass'}=${id}`)
+      Markup.callbackButton(button, `${index ? `kick${index}` : 'pass'}=${id}`)
     )).sort(() => Math.random() - 0.5)
 
     const captchaMessage = await ctx.reply(

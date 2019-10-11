@@ -5,18 +5,28 @@ const knex = require('knex')
 const Telegraf = require('telegraf')
 
 const knexConfig = require('@/../knexfile')
-const { captchaCommand, startCommand } = require('@/commands')
-const { userMiddleware, debugMiddleware } = require('@/middlewares')
+
+const {
+  startCommand,
+  settingsCommand,
+} = require('@/commands')
+
+const {
+  userMiddleware,
+  debugMiddleware,
+} = require('@/middlewares')
+
+const {
+  newChatMemberHandler,
+  leftChatMemberHandler,
+} = require('@/handlers')
+
 const {
   kickAction,
   passAction,
   actionsAction,
   editSettingAction,
 } = require('@/actions')
-const {
-  newChatMemberHandler,
-  leftChatMemberHandler,
-} = require('@/handlers')
 
 const { session } = Telegraf
 const { BOT_NAME, BOT_TOKEN } = process.env
@@ -41,8 +51,8 @@ bot.on('left_chat_member', leftChatMemberHandler())
 /**
  * Actions
  */
-bot.action(/^kick=(\d+)/, kickAction())
 bot.action(/^pass=(\d+)/, passAction())
+bot.action(/^kick\d+=(\d+)/, kickAction())
 bot.action(/^action=(\w+)/, actionsAction())
 bot.action(/^settings=(\w+)&field=(\w+)/, editSettingAction())
 
@@ -50,7 +60,7 @@ bot.action(/^settings=(\w+)&field=(\w+)/, editSettingAction())
  * Commands
  */
 bot.start(startCommand())
-bot.command('captcha', captchaCommand())
+bot.command('settings', settingsCommand())
 
 /**
  * Run

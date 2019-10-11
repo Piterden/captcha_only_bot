@@ -29,7 +29,7 @@ module.exports = () => async (ctx) => {
           }
         })
         ctx.session.messages = [currentMessageId]
-        ctx.answerCbQuery('Сохранено!')
+        ctx.answerCbQuery('Saved!')
       }
       break
 
