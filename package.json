@@ -15,6 +15,10 @@
     "migrate:refresh": "knex migrate:rollback && knex migrate:latest"
   },
   "author": "Denis Efremov <efremov.a.denis@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Piterden/captcha_only_bot.git"
+  },
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.1.0",
