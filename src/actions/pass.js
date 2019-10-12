@@ -9,7 +9,8 @@ module.exports = () => async (ctx) => {
   config = JSON.parse(config)
 
   if (!ctx.session.restricted || ctx.from.id !== Number(ctx.match[2])) {
-    return ctx.answerCbQuery(config.captcha.notYouToast)
+    await ctx.answerCbQuery(config.captcha.notYouToast)
+    return null
   }
   ctx.session.restricted = null
 

@@ -52,7 +52,7 @@ bot.on('left_chat_member', leftChatMemberHandler())
 /**
  * Actions
  */
-bot.action(/^(\w{10})=(\d+)/, passAction())
+bot.action(/^([.\d]{18})=(\d+)/, passAction())
 bot.action(/^action=(\w+)/, actionsAction())
 bot.action(/^settings=(\w+)&field=(\w+)/, editSettingAction())
 
