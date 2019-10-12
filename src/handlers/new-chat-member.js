@@ -3,6 +3,10 @@ const Markup = require('telegraf/markup')
 const { errorHandler, defaultConfig } = require('@/helpers')
 
 const { BOT_NAME } = process.env
+const randomString = (length) => Array.from(
+  { length },
+  () => String.fromCharCode(Math.round(Math.random() * 55 + 66))
+).join('')
 
 module.exports = () => async (ctx) => {
   const date = new Date()
@@ -64,11 +68,12 @@ module.exports = () => async (ctx) => {
       can_add_web_page_previews: false,
     })
 
+    ctx.session.pass = randomString(10)
     const name = username
       ? `@${username.replace(/([_*~])/g, '\\$1')}`
       : `[${firstName || lastName}](tg://user?id=${id})`
     const buttons = config.captcha.buttons.split('\n').map((button, index) => (
-      Markup.callbackButton(button, `${index ? `kick${index}` : 'pass'}=${id}`)
+      Markup.callbackButton(button, `${index ? randomString(10) : ctx.session.pass}=${id}`)
     )).sort(() => Math.random() - 0.5)
 
     const captchaMessage = await ctx.reply(

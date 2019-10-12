@@ -23,7 +23,6 @@ const {
 } = require('@/handlers')
 
 const {
-  kickAction,
   passAction,
   actionsAction,
   editSettingAction,
@@ -53,8 +52,7 @@ bot.on('left_chat_member', leftChatMemberHandler())
 /**
  * Actions
  */
-bot.action(/^pass=(\d+)/, passAction())
-bot.action(/^kick\d+=(\d+)/, kickAction())
+bot.action(/^(\w{10})=(\d+)/, passAction())
 bot.action(/^action=(\w+)/, actionsAction())
 bot.action(/^settings=(\w+)&field=(\w+)/, editSettingAction())
 
