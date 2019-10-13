@@ -15,7 +15,7 @@ module.exports = {
       description: 'A time to unban user of temporary ban.',
       default: 40,
       unit: 'sec',
-      min: 30,
+      min: 0,
       max: 300,
     },
     messageGreetings: {
