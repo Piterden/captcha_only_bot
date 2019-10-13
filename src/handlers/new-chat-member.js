@@ -65,12 +65,26 @@ module.exports = () => async (ctx) => {
     })
 
     ctx.session.pass = Math.random().toString()
+
     const name = username
       ? `@${username.replace(/([_*~])/g, '\\$1')}`
       : `[${firstName || lastName}](tg://user?id=${id})`
-    const buttons = config.captcha.buttons.split('\n').map((button, index) => (
-      Markup.callbackButton(button, `${index ? Math.random().toString() : ctx.session.pass}=${id}`)
-    )).sort(() => Math.random() - 0.5)
+    const buttonsArray = config.captcha.buttons.split('\n')
+    const correct = buttonsArray[0]
+    const buttons = buttonsArray.sort(() => Math.random() - 0.5)
+      .reduce((acc, button, index) => {
+        const newIndex = parseInt(index / 3, 10)
+
+        acc[newIndex] = acc[newIndex] || []
+        acc[newIndex].push(
+          Markup.callbackButton(
+            button,
+            `${button === correct ? ctx.session.pass : Math.random().toString()}=${id}`,
+          )
+        )
+
+        return acc
+      }, [])
 
     const captchaMessage = await ctx.reply(
       `${config.captcha.messageGreetings.replace('{name}', name)}

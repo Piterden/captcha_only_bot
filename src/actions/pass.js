@@ -4,14 +4,13 @@ module.exports = () => async (ctx) => {
   const [chat] = await ctx.database('groups')
     .where({ id: Number(ctx.chat.id) })
     .catch(errorHandler)
-  let { config } = chat
-
-  config = JSON.parse(config)
+  const config = JSON.parse(chat.config)
 
   if (!ctx.session.restricted || ctx.from.id !== Number(ctx.match[2])) {
     await ctx.answerCbQuery(config.captcha.notYouToast)
     return null
   }
+
   ctx.session.restricted = null
 
   if (ctx.session.timeoutToKick) {
@@ -31,16 +30,18 @@ module.exports = () => async (ctx) => {
       }
     )
 
-    ctx.answerCbQuery(config.captcha.successToast)
-    return ctx.deleteMessage()
+    await ctx.answerCbQuery(config.captcha.successToast)
+    await ctx.deleteMessage()
+    return null
   }
 
-  ctx.answerCbQuery(config.captcha.failuteToast)
+  await ctx.answerCbQuery(config.captcha.failuteToast)
   await ctx.tg.kickChatMember(ctx.chat.id, ctx.from.id)
 
   setTimeout(() => {
     ctx.tg.unbanChatMember(ctx.chat.id, ctx.from.id)
-  }, 40000)
+  }, config.captcha.unbanTimeout * 1000)
 
-  return ctx.deleteMessage()
+  await ctx.deleteMessage()
+  return null
 }

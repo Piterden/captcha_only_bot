@@ -54,3 +54,13 @@ rules:
   semi:
     - error
     - never
+  no-magic-numbers:
+    - 1
+    -
+      ignore:
+        - 0
+        - 0.5
+        - 1
+        - 2
+        - 3
+        - 1000
