@@ -5,28 +5,14 @@ const knex = require('knex')
 const Telegraf = require('telegraf')
 
 const knexConfig = require('@/../knexfile')
-
-const {
-  startCommand,
-  settingsCommand,
-} = require('@/commands')
-
-const {
-  userMiddleware,
-  debugMiddleware,
-} = require('@/middlewares')
-
+const { startCommand, settingsCommand } = require('@/commands')
+const { userMiddleware, debugMiddleware } = require('@/middlewares')
+const { passAction, actionsAction, editSettingAction } = require('@/actions')
 const {
   hearsHandler,
   newChatMemberHandler,
   leftChatMemberHandler,
 } = require('@/handlers')
-
-const {
-  passAction,
-  actionsAction,
-  editSettingAction,
-} = require('@/actions')
 
 const { session } = Telegraf
 const { BOT_NAME, BOT_TOKEN } = process.env

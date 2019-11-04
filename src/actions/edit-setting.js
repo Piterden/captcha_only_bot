@@ -1,6 +1,6 @@
 const configMap = require('@/config')
 const { editSettingMessage } = require('@/messages')
-const { debug } = require('@/helpers')
+// const { debug } = require('@/helpers')
 
 module.exports = () => async (ctx) => {
   const [, setting, field] = ctx.match
@@ -20,7 +20,7 @@ module.exports = () => async (ctx) => {
   ctx.session.messages = ctx.session.messages || []
   ctx.session.messages.push(id)
 
-  debug(ctx.session)
+  // debug(ctx.session)
 
   return ctx.answerCbQuery()
 }
