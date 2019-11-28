@@ -5,11 +5,11 @@ module.exports = () => async (ctx, next) => {
     return next()
   }
 
-  let user = await ctx.database('users')
+  const date = new Date()
+  const user = await ctx.database('users')
     .where({ id: Number(ctx.from.id) })
     .first()
     .catch(errorHandler)
-  const date = new Date()
 
   if (user) {
     const diff = Object.keys(ctx.from).reduce((acc, key) => {
@@ -33,10 +33,12 @@ module.exports = () => async (ctx, next) => {
         .update(fields)
         .catch(errorHandler)
 
-      user = await ctx.database('users')
+      ctx.session.user = await ctx.database('users')
         .where({ id: Number(ctx.from.id) })
         .first()
         .catch(errorHandler)
+
+      return next()
     }
 
     ctx.session.user = user
@@ -44,10 +46,9 @@ module.exports = () => async (ctx, next) => {
     return next()
   }
 
-  user = { ...ctx.from, created_at: date }
-
-  await ctx.database('users').insert(user).catch(errorHandler)
-  ctx.session.user = user
+  ctx.session.restricted = true
+  ctx.session.user = { ...ctx.from, created_at: date }
+  await ctx.database('users').insert(ctx.session.user).catch(errorHandler)
 
   return next()
 }

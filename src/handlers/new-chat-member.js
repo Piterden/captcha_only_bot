@@ -6,8 +6,9 @@ const { BOT_NAME } = process.env
 
 module.exports = () => async (ctx) => {
   const date = new Date()
-  const [chat] = await ctx.database('groups')
+  const chat = await ctx.database('groups')
     .where({ id: Number(ctx.chat.id) })
+    .first()
     .catch(errorHandler)
 
   if (ctx.message.new_chat_member.username === BOT_NAME) {
@@ -45,9 +46,7 @@ module.exports = () => async (ctx) => {
     return
   }
 
-  let { config } = chat
-
-  config = JSON.parse(config)
+  const config = JSON.parse(chat.config)
 
   if (!ctx.message.new_chat_member.is_bot) {
     const {

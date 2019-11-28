@@ -1,25 +1,26 @@
 const { errorHandler } = require('@/helpers')
 
 module.exports = () => async (ctx) => {
-  const [chat] = await ctx.database('groups')
+  const chat = await ctx.database('groups')
     .where({ id: Number(ctx.chat.id) })
+    .first()
     .catch(errorHandler)
   const config = JSON.parse(chat.config)
 
-  if (!ctx.session.restricted || ctx.from.id !== Number(ctx.match[2])) {
+  if (ctx.from.id !== Number(ctx.match[2])) {
     await ctx.answerCbQuery(config.captcha.notYouToast)
     return null
   }
 
-  ctx.session.restricted = null
-
-  if (ctx.session.timeoutToKick) {
-    clearTimeout(ctx.session.timeoutToKick)
-    ctx.session.timeoutToKick = null
-  }
-
   if (ctx.session.pass === ctx.match[1]) {
     ctx.session.pass = null
+    ctx.session.restricted = null
+
+    if (ctx.session.timeoutToKick) {
+      clearTimeout(ctx.session.timeoutToKick)
+      ctx.session.timeoutToKick = null
+    }
+
     await ctx.restrictChatMember(
       ctx.from.id,
       {
