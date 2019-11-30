@@ -52,3 +52,18 @@ bot.command('settings', settingsCommand())
  * Run
  */
 bot.startPolling()
+
+module.exports = {
+  on: {
+    new_chat_members: newChatMemberHandler,
+    left_chat_member: leftChatMemberHandler,
+  },
+  action: {
+    '/^([.\\d]{15,22})=(\\d+)/': passAction,
+    '/^action=(\\w+)/': actionsAction,
+    '/^settings=(\\w+)&field=(\\w+)/': editSettingAction,
+  },
+  hears: {
+    '/[\\S\\s]*/': hearsHandler,
+  },
+}

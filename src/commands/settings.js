@@ -24,9 +24,9 @@ module.exports = () => async (ctx) => {
     .where({ id: Number(ctx.chat.id) })
     .first()
     .catch(errorHandler)
-  let { config } = chat
 
-  config = JSON.parse(config)
+  const config = JSON.parse(chat.config)
+
   ctx.session.old = config
 
   const buttons = settingsButtons(ctx)

@@ -1,6 +1,6 @@
 {
   "name": "captcha_only_bot",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Bot admin captcha",
   "main": "src/index.js",
   "scripts": {
