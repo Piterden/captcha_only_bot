@@ -47,7 +47,7 @@ module.exports = () => async (ctx, next) => {
   }
 
   ctx.session.restricted = true
-  ctx.session.user = { ...ctx.from, created_at: date }
+  ctx.session.user = { ...ctx.from, created_at: date, approved: false }
   await ctx.database('users').insert(ctx.session.user).catch(errorHandler)
 
   return next()

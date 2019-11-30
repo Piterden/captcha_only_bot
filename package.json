@@ -9,6 +9,7 @@
     "watch": "pm2 start --watch . -n captc src/index.js",
     "lint": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js --fix .",
+    "migrate:make": "knex migrate:make",
     "migrate": "npm run migrate:up",
     "migrate:up": "knex migrate:latest",
     "migrate:down": "knex migrate:rollback",
