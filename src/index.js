@@ -17,53 +17,52 @@ const {
 const { session } = Telegraf
 const { BOT_NAME, BOT_TOKEN } = process.env
 
-const bot = new Telegraf(BOT_TOKEN, { username: BOT_NAME })
+const init = async (bot, dbConfig) => {
+  bot.context.database = knex(dbConfig)
 
-bot.context.database = knex(knexConfig)
+  /**
+   * Middlewares
+   */
+  bot.use(session())
+  bot.use(userMiddleware())
+  bot.use(debugMiddleware())
 
-/**
- * Middlewares
- */
-bot.use(session())
-bot.use(userMiddleware())
-bot.use(debugMiddleware())
+  /**
+   * Handlers
+   */
+  bot.hears(/[\S\s]*/, hearsHandler())
+  bot.on('new_chat_members', newChatMemberHandler())
+  bot.on('left_chat_member', leftChatMemberHandler())
 
-/**
- * Handlers
- */
-bot.hears(/[\S\s]*/, hearsHandler())
-bot.on('new_chat_members', newChatMemberHandler())
-bot.on('left_chat_member', leftChatMemberHandler())
+  /**
+   * Actions
+   */
+  bot.action(/^([.\d]{15,22})=(\d+)/, passAction())
+  bot.action(/^action=(\w+)/, actionsAction())
+  bot.action(/^settings=(\w+)&field=(\w+)/, editSettingAction())
 
-/**
- * Actions
- */
-bot.action(/^([.\d]{15,22})=(\d+)/, passAction())
-bot.action(/^action=(\w+)/, actionsAction())
-bot.action(/^settings=(\w+)&field=(\w+)/, editSettingAction())
+  /**
+   * Commands
+   */
+  bot.start(startCommand())
+  bot.command('settings', settingsCommand())
 
-/**
- * Commands
- */
-bot.start(startCommand())
-bot.command('settings', settingsCommand())
-
-/**
- * Run
- */
-bot.startPolling()
-
-module.exports = {
-  on: {
-    new_chat_members: newChatMemberHandler,
-    left_chat_member: leftChatMemberHandler,
-  },
-  action: {
-    '/^([.\\d]{15,22})=(\\d+)/': passAction,
-    '/^action=(\\w+)/': actionsAction,
-    '/^settings=(\\w+)&field=(\\w+)/': editSettingAction,
-  },
-  hears: {
-    '/[\\S\\s]*/': hearsHandler,
-  },
+  return bot
 }
+
+/**
+ * Init bot function.
+ *
+ * @param {Telegraf} bot The bot instance.
+ * @param {Object} dbConfig The knex connection configuration.
+ * @return {Promise<Telegraf>} Bot ready to launch.
+ */
+init(new Telegraf(BOT_TOKEN, { username: BOT_NAME }), knexConfig)
+  .then((bot) => {
+    /**
+     * Run
+     */
+    bot.startPolling()
+  })
+
+module.exports = init
