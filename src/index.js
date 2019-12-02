@@ -37,7 +37,7 @@ const init = async (bot, dbConfig) => {
   /**
    * Actions
    */
-  bot.action(/^([.\d]{15,22})=(\d+)/, passAction())
+
   bot.action(/^action=(\w+)/, actionsAction())
   bot.action(/^settings=(\w+)&field=(\w+)/, editSettingAction())
 
