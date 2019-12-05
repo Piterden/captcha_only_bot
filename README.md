@@ -1,6 +1,6 @@
 # Captcha Only Bot
 
-![Travis (.org)](https://img.shields.io/travis/Piterden/captcha_only_bot.svg?style=for-the-badge)
+![Travis (.org)](https://img.shields.io/travis/com/Piterden/captcha_only_bot.svg?style=for-the-badge)
 ![GitHub search hit counter](https://img.shields.io/github/search/Piterden/captcha_only_bot/captcha.svg?style=for-the-badge)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Piterden/captcha_only_bot.svg?style=for-the-badge)
 
