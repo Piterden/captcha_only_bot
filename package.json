@@ -1,10 +1,9 @@
 {
   "name": "captcha_only_bot",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Bot admin captcha",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
     "watch": "pm2 start --watch . -n captc src/index.js",
     "lint": "eslint --ext .js .",
@@ -25,7 +24,6 @@
     "dotenv": "^8.2.0",
     "knex": "^0.19.4",
     "module-alias": "^2.2.1",
-    "mysql": "^2.17.1",
     "mysql2": "^2.1.0",
     "telegraf": "^3.34.1"
   },

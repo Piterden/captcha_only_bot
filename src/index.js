@@ -62,7 +62,7 @@ init(new Telegraf(BOT_TOKEN, { username: BOT_NAME }), knexConfig)
     /**
      * Run
      */
-    bot.startPolling()
+    bot.launch()
   })
 
 module.exports = init
