@@ -5,7 +5,7 @@ module.exports = () => async (ctx) => {
     .where({ id: Number(ctx.chat.id) })
     .first()
     .catch(errorHandler)
-  const config = JSON.parse(chat.config)
+  const config = chat.config
 
   if (ctx.from.id !== Number(ctx.match[2])) {
     await ctx.answerCbQuery(config.captcha.notYouToast)

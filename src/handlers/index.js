@@ -1,9 +1,9 @@
 const hearsHandler = require('./hears')
-const newChatMemberHandler = require('./new-chat-member')
+const newChatMembersHandler = require('./new-chat-members')
 const leftChatMemberHandler = require('./left-chat-member')
 
 module.exports = {
   hearsHandler,
-  newChatMemberHandler,
+  newChatMembersHandler,
   leftChatMemberHandler,
 }

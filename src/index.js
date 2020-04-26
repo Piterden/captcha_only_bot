@@ -10,7 +10,7 @@ const { userMiddleware, debugMiddleware } = require('./middlewares')
 const { passAction, actionsAction, editSettingAction } = require('./actions')
 const {
   hearsHandler,
-  newChatMemberHandler,
+  newChatMembersHandler,
   leftChatMemberHandler,
 } = require('./handlers')
 
@@ -31,7 +31,7 @@ const init = async (bot, dbConfig) => {
    * Handlers
    */
   bot.hears(/[\S\s]*/, hearsHandler())
-  bot.on('new_chat_members', newChatMemberHandler())
+  bot.on('new_chat_members', newChatMembersHandler())
   bot.on('left_chat_member', leftChatMemberHandler())
 
   /**

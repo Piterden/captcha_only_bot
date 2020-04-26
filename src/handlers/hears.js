@@ -5,10 +5,10 @@ const { settingsButtons } = require('@/buttons')
 const { settingsMessage } = require('@/messages')
 
 module.exports = () => async (ctx, next) => {
-  if (ctx.session.restricted) {
-    await ctx.tg.deleteMessage(ctx.chat.id, ctx.update.message.message_id)
-    return next()
-  }
+  // if (ctx.session.restricted) {
+  //   await ctx.tg.deleteMessage(ctx.chat.id, ctx.update.message.message_id)
+  //   return next()
+  // }
 
   if (!ctx.session.edit || !ctx.session.field ||
     !configMap || !configMap[ctx.session.edit] ||

@@ -10,8 +10,10 @@ module.exports = () => async (ctx) => {
     .where({ id: Number(ctx.chat.id) })
     .first()
     .catch(errorHandler)
+  const index = ctx.message.new_chat_members
+    .findIndex(({ username }) => username === BOT_NAME)
 
-  if (ctx.message.new_chat_member.username === BOT_NAME) {
+  if (index !== -1) {
     if (chat) {
       const diff = Object.keys(ctx.chat).reduce((acc, key) => {
         if (key === 'id') {
@@ -46,15 +48,22 @@ module.exports = () => async (ctx) => {
     return
   }
 
-  const config = JSON.parse(chat.config)
+  if (ctx.message.new_chat_members.length > 1) {
+    return
+  }
 
-  if (!ctx.message.new_chat_member.is_bot) {
+  const member = ctx.message.new_chat_members[0]
+
+  if (!member.is_bot) {
+    if (typeof chat.config === 'string') {
+      chat.config = JSON.parse(chat.config)
+    }
     const {
       id,
       username,
       first_name: firstName,
       last_name: lastName,
-    } = ctx.message.new_chat_member
+    } = member
 
     ctx.session.restricted = await ctx.restrictChatMember(id, {
       can_send_messages: false,
@@ -68,17 +77,19 @@ module.exports = () => async (ctx) => {
     const name = username
       ? `@${username.replace(/([_*~])/g, '\\$1')}`
       : `[${firstName || lastName}](tg://user?id=${id})`
-    const buttonsArray = config.captcha.buttons.split('\n')
+    const buttonsArray = chat.config.captcha.buttons.split('\n')
     const correct = buttonsArray[0]
     const buttons = buttonsArray.sort(() => Math.random() - 0.5)
-      .reduce((acc, button, index) => {
-        const newIndex = parseInt(index / 3, 10)
+      .reduce((acc, button, idx) => {
+        const newIndex = parseInt(idx / 3, 10)
 
         acc[newIndex] = acc[newIndex] || []
         acc[newIndex].push(
           Markup.callbackButton(
             button,
-            `${button === correct ? ctx.session.pass : Math.random().toString()}=${id}`,
+            `${button === correct
+              ? ctx.session.pass
+              : Math.random().toString()}=${id}`,
           )
         )
 
@@ -86,9 +97,9 @@ module.exports = () => async (ctx) => {
       }, [])
 
     const captchaMessage = await ctx.reply(
-      `${config.captcha.messageGreetings.replace('{name}', name)}
+      `${chat.config.captcha.messageGreetings.replace('{name}', name)}
 
-${config.captcha.messageCaptcha}`,
+${chat.config.captcha.messageCaptcha}`,
       {
         ...Markup.inlineKeyboard(buttons).extra(),
         parse_mode: 'Markdown',
@@ -101,8 +112,8 @@ ${config.captcha.messageCaptcha}`,
       ctx.deleteMessage(captchaMessage.message_id)
       setTimeout(() => {
         ctx.tg.unbanChatMember(ctx.chat.id, id)
-      }, config.captcha.unbanTimeout * 1000)
-    }, config.captcha.waitingTimeout * 1000)
+      }, chat.config.captcha.unbanTimeout * 1000)
+    }, chat.config.captcha.waitingTimeout * 1000)
   }
 
   setTimeout(() => {

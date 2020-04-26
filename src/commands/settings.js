@@ -25,7 +25,7 @@ module.exports = () => async (ctx) => {
     .first()
     .catch(errorHandler)
 
-  const config = JSON.parse(chat.config)
+  const config = chat.config
 
   ctx.session.old = config
 
