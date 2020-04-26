@@ -1,12 +1,12 @@
 require('dotenv').config()
 
 const {
-  DB_CLIENT, DB_DATABASE, DB_USERNAME, DB_PASSWORD, DB_CHARSET,
+  DB_DRIVER, DB_DATABASE, DB_USERNAME, DB_PASSWORD, DB_CHARSET,
   DB_MIGRATIONS_TABLE, NODE_ENV,
 } = process.env
 
 const defaultParams = {
-  client: DB_CLIENT,
+  client: DB_DRIVER,
   connection: {
     database: DB_DATABASE,
     password: DB_PASSWORD,
