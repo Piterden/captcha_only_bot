@@ -12,5 +12,5 @@ module.exports = () => async (ctx) => {
       .catch(errorHandler)
   }
 
-  await ctx.deleteMessage(ctx.message.message_id)
+  await ctx.deleteMessage(ctx.message.message_id).catch(errorHandler)
 }
