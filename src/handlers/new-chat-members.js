@@ -70,7 +70,7 @@ module.exports = () => async (ctx) => {
       can_send_media_messages: false,
       can_send_other_messages: false,
       can_add_web_page_previews: false,
-    })
+    }).catch(errorHandler)
 
     ctx.session.pass = Math.random().toString()
 
@@ -106,12 +106,12 @@ ${chat.config.captcha.messageCaptcha}`,
       }
     )
 
-    ctx.session.timeoutToKick = setTimeout(() => {
+    ctx.session.timeoutToKick = setTimeout(async () => {
       ctx.session.timeoutToKick = null
-      ctx.kickChatMember(id)
-      ctx.deleteMessage(captchaMessage.message_id)
-      setTimeout(() => {
-        ctx.tg.unbanChatMember(ctx.chat.id, id)
+      await ctx.kickChatMember(id).catch(errorHandler)
+      await ctx.deleteMessage(captchaMessage.message_id).catch(errorHandler)
+      setTimeout(async () => {
+        await ctx.tg.unbanChatMember(ctx.chat.id, id).catch(errorHandler)
       }, chat.config.captcha.unbanTimeout * 1000)
     }, chat.config.captcha.waitingTimeout * 1000)
   }

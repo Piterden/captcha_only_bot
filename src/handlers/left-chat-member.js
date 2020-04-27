@@ -12,5 +12,9 @@ module.exports = () => async (ctx) => {
       .catch(errorHandler)
   }
 
+  if (ctx.session.timeoutToKick) {
+    clearTimeout(ctx.session.timeoutToKick)
+  }
+
   await ctx.deleteMessage(ctx.message.message_id).catch(errorHandler)
 }
