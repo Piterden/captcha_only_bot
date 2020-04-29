@@ -1,13 +1,15 @@
 const Markup = require('telegraf/markup')
 
 const configMap = require('@/config')
-const { errorHandler } = require('@/helpers')
+const { errorHandler, debug } = require('@/helpers')
 const { settingsButtons } = require('@/buttons')
 
 module.exports = () => async (ctx) => {
   await ctx.deleteMessage()
 
   const chatMember = await ctx.tg.getChatMember(ctx.chat.id, ctx.from.id)
+
+  debug(chatMember)
 
   if (!['creator', 'administrator'].includes(chatMember.status)) {
     const { message_id: id } = await ctx.reply('The only admins can manage this!')

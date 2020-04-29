@@ -6,7 +6,7 @@ const { BOT_NAME } = process.env
 
 module.exports = () => async (ctx) => {
   const date = new Date()
-  const chat = await ctx.database('groups')
+  let chat = await ctx.database('groups')
     .where({ id: Number(ctx.chat.id) })
     .first()
     .catch(errorHandler)
@@ -40,12 +40,19 @@ module.exports = () => async (ctx) => {
         .insert({
           ...ctx.chat,
           active: true,
-          config: JSON.stringify(defaultConfig),
+          config: defaultConfig,
           created_at: date,
         })
         .catch(errorHandler)
     }
     return
+  }
+
+  if (!chat) {
+    chat = await ctx.database('groups')
+      .where({ id: Number(ctx.chat.id) })
+      .first()
+      .catch(errorHandler)
   }
 
   if (ctx.message.new_chat_members.length > 1) {
@@ -107,7 +114,7 @@ ${chat.config.captcha.messageCaptcha}`,
     )
 
     ctx.session.timeoutToKick = setTimeout(async () => {
-      ctx.session.timeoutToKick = null
+      ctx.session.timeoutToKickXn = null
       await ctx.kickChatMember(id).catch(errorHandler)
       await ctx.deleteMessage(captchaMessage.message_id).catch(errorHandler)
       setTimeout(async () => {
