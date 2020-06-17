@@ -1,9 +1,9 @@
 const { errorHandler } = require('@/helpers')
 
-const { BOT_NAME } = process.env
+const { BOT_USER } = process.env
 
 module.exports = () => async (ctx) => {
-  if (ctx.message.left_chat_member.username === BOT_NAME) {
+  if (ctx.message.left_chat_member.username === BOT_USER) {
     const date = new Date()
 
     await ctx.database('groups')

@@ -15,7 +15,7 @@ const {
 } = require('./handlers')
 
 const { session } = Telegraf
-const { BOT_NAME, BOT_TOKEN } = process.env
+const { BOT_USER, BOT_TOKEN } = process.env
 
 const init = async (bot, dbConfig) => {
   bot.context.database = knex(dbConfig)
@@ -57,7 +57,7 @@ const init = async (bot, dbConfig) => {
  * @param {Object} dbConfig The knex connection configuration.
  * @return {Promise<Telegraf>} Bot ready to launch.
  */
-init(new Telegraf(BOT_TOKEN, { username: BOT_NAME }), knexConfig)
+init(new Telegraf(BOT_TOKEN, { username: BOT_USER }), knexConfig)
   .then((bot) => {
     /**
      * Run

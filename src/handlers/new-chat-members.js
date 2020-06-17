@@ -2,7 +2,7 @@ const Markup = require('telegraf/markup')
 
 const { errorHandler, defaultConfig } = require('@/helpers')
 
-const { BOT_NAME } = process.env
+const { BOT_USER } = process.env
 
 module.exports = () => async (ctx) => {
   const date = new Date()
@@ -11,9 +11,9 @@ module.exports = () => async (ctx) => {
     .first()
     .catch(errorHandler)
   const index = ctx.message.new_chat_members
-    .findIndex(({ username }) => username === BOT_NAME)
+    .findIndex(({ username }) => username === BOT_USER)
 
-  if (index !== -1) {
+  if (index > -1) {
     if (chat) {
       const diff = Object.keys(ctx.chat).reduce((acc, key) => {
         if (key === 'id') {
@@ -40,7 +40,7 @@ module.exports = () => async (ctx) => {
         .insert({
           ...ctx.chat,
           active: true,
-          config: defaultConfig,
+          config: JSON.stringify(defaultConfig),
           created_at: date,
         })
         .catch(errorHandler)
