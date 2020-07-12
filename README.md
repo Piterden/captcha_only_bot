@@ -18,8 +18,16 @@ Each newcomer to a chat will be instantly restricted to do anything in a chat, u
 
 ![](./images/docs-1.jpg)
 
-## Donate
+#### Parameters
 
-- **BTC** `3F275vPSCvYW19MHZqSjw79fEwwU4MbTgV`
-- **LTC** `MGMCQB3QAcrSBjU3eGJviqB2J2f5BNVRGr`
-- **DOGE** `D5m69FRDGEn3G3xuakvqTxUpGVt6NegKJp`
+| Parameter         | Type   | Default                                                                |
+| ----------------- | ------ | ---------------------------------------------------------------------- |
+| Captcha timeout   | Number |                                                                    300 |
+| Time to unban     | Number |                                                                     40 |
+| Greetings message | String | Hello, {name}. You should answer a question to enter a chat.           |
+| Question message  | String | *What is this chat about?*                                             |
+| Success message   | String | Welcome, {name}!                                                       |
+| Wrong user toast  | String | Not for you, asshole!!!                                                |
+| Success toast     | String | Correct! Welcome to a chat!                                            |
+| Failed toast      | String | No! Read a chat description and try one more time after a few minutes! |
+| Answers list      | Array  | MySQL\nKitties\nAnime                                                  |
