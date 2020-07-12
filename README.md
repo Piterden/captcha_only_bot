@@ -6,7 +6,7 @@
 
 Captcha admin bot.
 
-> Bot requires admin rights!
+> **!!! Bot requires admin rights and looses its sense either!**
 
 ## Overview
 
@@ -15,6 +15,8 @@ Each newcomer to a chat will be instantly restricted to do anything in a chat, u
 ## Commands
 
 - **`/settings`** - _Works only in groups and only for admins!!!_ Shows the settings overview and editor.
+
+![](./images/docs-1.jpg)
 
 ## Donate
 
