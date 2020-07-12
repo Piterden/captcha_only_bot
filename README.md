@@ -18,16 +18,40 @@ Each newcomer to a chat will be instantly restricted to do anything in a chat, u
 
 ![](./images/docs-1.jpg)
 
-#### Parameters
+### Settings command
+
+| Parameter         | Type   | Default |
+| ----------------- | ------ | ------- |
+| Captcha timeout   | Number |     300 |
+
+| Parameter         | Type   | Default |
+| ----------------- | ------ | ------- |
+| Time to unban     | Number |      40 |
+
+| Parameter         | Type   | Default                                                      |
+| ----------------- | ------ | ------------------------------------------------------------ |
+| Greetings message | String | Hello, {name}. You should answer a question to enter a chat. |
+
+| Parameter         | Type   | Default                    |
+| ----------------- | ------ | -------------------------- |
+| Question message  | String | *What is this chat about?* |
+
+| Parameter         | Type   | Default          |
+| ----------------- | ------ | ---------------- |
+| Success message   | String | Welcome, {name}! |
+
+| Parameter         | Type   | Default                 |
+| ----------------- | ------ | ----------------------- |
+| Wrong user toast  | String | Not for you, asshole!!! |
+
+| Parameter         | Type   | Default                     |
+| ----------------- | ------ | --------------------------- |
+| Success toast     | String | Correct! Welcome to a chat! |
 
 | Parameter         | Type   | Default                                                                |
 | ----------------- | ------ | ---------------------------------------------------------------------- |
-| Captcha timeout   | Number |                                                                    300 |
-| Time to unban     | Number |                                                                     40 |
-| Greetings message | String | Hello, {name}. You should answer a question to enter a chat.           |
-| Question message  | String | *What is this chat about?*                                             |
-| Success message   | String | Welcome, {name}!                                                       |
-| Wrong user toast  | String | Not for you, asshole!!!                                                |
-| Success toast     | String | Correct! Welcome to a chat!                                            |
 | Failed toast      | String | No! Read a chat description and try one more time after a few minutes! |
-| Answers list      | Array  | MySQL\nKitties\nAnime                                                  |
+
+| Parameter         | Type   | Default               |
+| ----------------- | ------ | --------------------- |
+| Answers list      | Array  | MySQL\nKitties\nAnime |
