@@ -6,7 +6,7 @@
 
 Captcha admin bot.
 
-> Bot requires admin rights!
+> **!!! Bot requires admin rights and looses its sense either!**
 
 ## Overview
 
@@ -16,8 +16,44 @@ Each newcomer to a chat will be instantly restricted to do anything in a chat, u
 
 - **`/settings`** - _Works only in groups and only for admins!!!_ Shows the settings overview and editor.
 
-## Donate
+![](./images/docs-1.jpg)
 
-- **BTC** `3F275vPSCvYW19MHZqSjw79fEwwU4MbTgV`
-- **LTC** `MGMCQB3QAcrSBjU3eGJviqB2J2f5BNVRGr`
-- **DOGE** `D5m69FRDGEn3G3xuakvqTxUpGVt6NegKJp`
+### Settings command
+
+| Parameter         | Type     | Default |
+| ----------------- | ------   | ------- |
+| Captcha timeout   | `Number` |     300 |
+
+| Parameter         | Type     | Default |
+| ----------------- | ------   | ------- |
+| Time to unban     | `Number` |      40 |
+
+| Parameter         | Type     | Default                                                      |
+| ----------------- | ------   | ------------------------------------------------------------ |
+| Greetings message | `String` | Hello, {name}. You should answer a question to enter a chat. |
+
+| Parameter         | Type     | Default                    |
+| ----------------- | ------   | -------------------------- |
+| Question message  | `String` | *What is this chat about?* |
+
+| Parameter         | Type     | Default          |
+| ----------------- | ------   | ---------------- |
+| Success message   | `String` | Welcome, {name}! |
+
+| Parameter         | Type     | Default                 |
+| ----------------- | ------   | ----------------------- |
+| Wrong user toast  | `String` | Not for you, asshole!!! |
+
+| Parameter         | Type     | Default                     |
+| ----------------- | ------   | --------------------------- |
+| Success toast     | `String` | Correct! Welcome to a chat! |
+
+| Parameter         | Type     | Default                                                                |
+| ----------------- | ------   | ---------------------------------------------------------------------- |
+| Failed toast      | `String` | No! Read a chat description and try one more time after a few minutes! |
+
+| Parameter         | Type     | Default               |
+| ----------------- | ------   | --------------------- |
+| Answers list      | `Array`  | MySQL\nKitties\nAnime |
+
+![](./images/docs-2.jpg)
