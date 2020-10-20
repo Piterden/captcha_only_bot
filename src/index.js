@@ -6,7 +6,7 @@ const Telegraf = require('telegraf')
 
 const knexConfig = require('../knexfile')
 const { startCommand, settingsCommand } = require('./commands')
-const { userMiddleware, debugMiddleware } = require('./middlewares')
+const { userMiddleware } = require('./middlewares')
 const { passAction, actionsAction, editSettingAction } = require('./actions')
 const {
   hearsHandler,
@@ -25,7 +25,7 @@ const init = async (bot, dbConfig) => {
    */
   bot.use(session())
   bot.use(userMiddleware())
-  bot.use(debugMiddleware())
+  // bot.use(debugMiddleware())
 
   /**
    * Handlers

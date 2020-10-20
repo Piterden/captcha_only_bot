@@ -59,7 +59,11 @@ module.exports = () => async (ctx) => {
     return
   }
 
-  const member = ctx.message.new_chat_members[0]
+  const [member] = ctx.message.new_chat_members
+
+  if (Number(member.id) !== Number(ctx.from.id)) {
+    return
+  }
 
   if (!member.is_bot) {
     if (typeof chat.config === 'string') {

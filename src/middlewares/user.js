@@ -1,8 +1,12 @@
 const { errorHandler } = require('@/helpers')
 
 module.exports = () => async (ctx, next) => {
+  if (ctx.updateType === 'channel_post' || !ctx.from || !ctx.session) {
+    return
+  }
+
   if (ctx.session.user) {
-    return next()
+    next()
   }
 
   const users = () => ctx.database('users')
@@ -29,16 +33,19 @@ module.exports = () => async (ctx, next) => {
     if (Object.keys(diff).length > 0) {
       await users().where({ id }).update(fields).catch(errorHandler)
       ctx.session.user = await users().where({ id }).first().catch(errorHandler)
-      return next()
+      next()
     }
 
     ctx.session.user = user
-    return next()
+    next()
   }
 
-  ctx.session.restricted = true
-  ctx.session.user = { ...ctx.from, created_at: date }
+  if (ctx.session) {
+    ctx.session.restricted = true
+    ctx.session.user = { ...ctx.from, created_at: date }
+  }
+
   await users().insert(ctx.session.user).catch(errorHandler)
 
-  return next()
+  next()
 }
