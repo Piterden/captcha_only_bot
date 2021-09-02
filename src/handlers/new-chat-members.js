@@ -118,7 +118,7 @@ ${chat.config.captcha.messageCaptcha}`,
     )
 
     ctx.session.timeoutToKick = setTimeout(async () => {
-      ctx.session.timeoutToKickXn = null
+      ctx.session.timeoutToKick = null
       await ctx.kickChatMember(id).catch(errorHandler)
       await ctx.deleteMessage(captchaMessage.message_id).catch(errorHandler)
       setTimeout(async () => {

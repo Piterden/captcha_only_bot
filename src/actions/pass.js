@@ -1,6 +1,8 @@
 const { errorHandler } = require('@/helpers')
 
 module.exports = () => async (ctx) => {
+  const currentMessageId = ctx.update.callback_query.message.message_id
+
   const chat = await ctx.database('groups')
     .where({ id: Number(ctx.chat.id) })
     .first()
@@ -32,7 +34,7 @@ module.exports = () => async (ctx) => {
     )
 
     await ctx.answerCbQuery(config.captcha.successToast)
-    await ctx.deleteMessage()
+    await ctx.tg.deleteMessage(ctx.chat.id, currentMessageId)
     return null
   }
 
@@ -43,6 +45,6 @@ module.exports = () => async (ctx) => {
     ctx.tg.unbanChatMember(ctx.chat.id, ctx.from.id)
   }, config.captcha.unbanTimeout * 1000)
 
-  await ctx.deleteMessage()
+  await ctx.tg.deleteMessage(ctx.chat.id, currentMessageId)
   return null
 }

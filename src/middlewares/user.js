@@ -34,10 +34,12 @@ module.exports = () => async (ctx, next) => {
       await users().where({ id }).update(fields).catch(errorHandler)
       ctx.session.user = await users().where({ id }).first().catch(errorHandler)
       next()
+      return
     }
 
     ctx.session.user = user
     next()
+    return
   }
 
   if (ctx.session) {
