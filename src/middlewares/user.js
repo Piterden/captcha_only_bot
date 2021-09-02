@@ -6,7 +6,7 @@ module.exports = () => async (ctx, next) => {
   }
 
   if (ctx.session.user) {
-    next()
+    return next()
   }
 
   const users = () => ctx.database('users')
@@ -33,13 +33,11 @@ module.exports = () => async (ctx, next) => {
     if (Object.keys(diff).length > 0) {
       await users().where({ id }).update(fields).catch(errorHandler)
       ctx.session.user = await users().where({ id }).first().catch(errorHandler)
-      next()
-      return
+      return next()
     }
 
     ctx.session.user = user
-    next()
-    return
+    return next()
   }
 
   if (ctx.session) {

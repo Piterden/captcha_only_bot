@@ -15,6 +15,7 @@ parserOptions:
 rules:
   max-len: off
   import/no-cycle: off
+  consistent-return: off
   no-param-reassign: off
   prettier/prettier: off
   prefer-rest-params: off

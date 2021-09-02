@@ -6,7 +6,7 @@ const configMap = require('@/config')
 const debug = (data) => console.log(inspect(data, {
   showHidden: true,
   colors: true,
-  depth: 10,
+  depth: Infinity,
 }))
 
 // eslint-disable-next-line no-console
