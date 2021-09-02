@@ -16,6 +16,7 @@ rules:
   max-len: off
   import/no-cycle: off
   consistent-return: off
+  import/extensions: off
   no-param-reassign: off
   prettier/prettier: off
   prefer-rest-params: off
@@ -56,7 +57,7 @@ rules:
     - error
     - never
   no-magic-numbers:
-    - 1
+    - 0
     -
       ignore:
         - 0

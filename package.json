@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "watch": "pm2 start --watch . -n captc src/index.js",
-    "lint": "eslint --ext .js .",
-    "lint:fix": "eslint --ext .js --fix .",
+    "lint": "eslint --ext .js -c .eslintrc.yml .",
+    "lint:fix": "eslint --ext .js --fix -c .eslintrc.yml .",
     "migrate:make": "knex migrate:make",
     "migrate": "npm run migrate:up",
     "migrate:up": "knex migrate:latest",
