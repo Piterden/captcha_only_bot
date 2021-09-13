@@ -1,16 +1,16 @@
 const configMap = require('@/config')
 const { editSettingMessage } = require('@/messages')
-// const { debug } = require('@/helpers')
+const { errorHandler } = require('@/helpers')
 
 module.exports = () => async (ctx) => {
   const [, setting, field] = ctx.match
 
   if (ctx.session.edit !== setting) {
-    return ctx.answerCbQuery('Don\'t touch!!!')
+    return ctx.answerCbQuery('Don\'t touch!!!').catch(errorHandler)
   }
 
   if (!configMap[setting] || !Object.keys(configMap[setting]).includes(field)) {
-    return ctx.answerCbQuery(`${setting} or ${field} not found(`)
+    return ctx.answerCbQuery(`${setting} or ${field} not found(`).catch(errorHandler)
   }
 
   ctx.session.field = field

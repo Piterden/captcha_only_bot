@@ -7,5 +7,6 @@ I will show a captcha message to each newcomer to your chat.
 Also you can edit messages and a bit of my behavior with /settings command in a chat where you are admin.
 
 Created by @piterden`)
+      .catch(errorHandler)
   }
 }

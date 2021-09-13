@@ -8,7 +8,7 @@ module.exports = () => async (ctx) => {
   const config = chat.config
 
   if (ctx.from.id !== Number(ctx.match[2])) {
-    await ctx.answerCbQuery(config.captcha.notYouToast)
+    await ctx.answerCbQuery(config.captcha.notYouToast).catch(errorHandler)
     return null
   }
 
@@ -29,20 +29,20 @@ module.exports = () => async (ctx) => {
         can_send_other_messages: true,
         can_add_web_page_previews: true,
       }
-    )
+    ).catch(errorHandler)
 
     await ctx.answerCbQuery(config.captcha.successToast)
-    await ctx.deleteMessage()
+    await ctx.deleteMessage().catch(errorHandler)
     return null
   }
 
-  await ctx.answerCbQuery(config.captcha.failuteToast)
-  await ctx.tg.kickChatMember(ctx.chat.id, ctx.from.id)
+  await ctx.answerCbQuery(config.captcha.failuteToast).catch(errorHandler)
+  await ctx.tg.kickChatMember(ctx.chat.id, ctx.from.id).catch(errorHandler)
 
   setTimeout(() => {
-    ctx.tg.unbanChatMember(ctx.chat.id, ctx.from.id)
+    ctx.tg.unbanChatMember(ctx.chat.id, ctx.from.id).catch(errorHandler)
   }, config.captcha.unbanTimeout * 1000)
 
-  await ctx.deleteMessage()
+  await ctx.deleteMessage().catch(errorHandler)
   return null
 }

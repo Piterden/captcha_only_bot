@@ -34,8 +34,10 @@ module.exports = () => async (ctx, next) => {
     ctx.session.field = null
 
     await ctx.tg.deleteMessage(ctx.chat.id, ctx.update.message.message_id)
+      .catch(errorHandler)
     for (let idx = 1; idx < ctx.session.messages.length; idx += 1) {
       await ctx.tg.deleteMessage(ctx.chat.id, ctx.session.messages[idx])
+        .catch(errorHandler)
     }
 
     if (JSON.stringify(ctx.session.old) === JSON.stringify(ctx.session.new)) {
@@ -44,7 +46,7 @@ module.exports = () => async (ctx, next) => {
 
     const buttons = settingsButtons(ctx)
 
-    ctx.tg.editMessageText(
+    await ctx.tg.editMessageText(
       ctx.chat.id,
       ctx.session.messages[0],
       undefined,
@@ -53,7 +55,7 @@ module.exports = () => async (ctx, next) => {
         ...Markup.inlineKeyboard(buttons).extra(),
         parse_mode: 'Markdown',
       },
-    )
+    ).catch(errorHandler)
 
     ctx.session.messages = [ctx.session.messages[0]]
   }

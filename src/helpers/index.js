@@ -10,7 +10,7 @@ const debug = (data) => console.log(inspect(data, {
 }))
 
 // eslint-disable-next-line no-console
-const errorHandler = (error) => console.error(error)
+const errorHandler = (error) => debug(error)
 
 const defaultConfig = Object.entries(configMap).reduce(
   (acc, [settings, object]) => {

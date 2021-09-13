@@ -5,8 +5,9 @@ const knex = require('knex')
 const Telegraf = require('telegraf')
 
 const knexConfig = require('../knexfile')
-const { startCommand, settingsCommand } = require('./commands')
+const { errorHandler } = require('./helpers')
 const { userMiddleware } = require('./middlewares')
+const { startCommand, settingsCommand } = require('./commands')
 const { passAction, actionsAction, editSettingAction } = require('./actions')
 const {
   hearsHandler,
@@ -64,5 +65,6 @@ init(new Telegraf(BOT_TOKEN, { username: BOT_USER }), knexConfig)
      */
     bot.launch()
   })
+  .catch(errorHandler)
 
 module.exports = init

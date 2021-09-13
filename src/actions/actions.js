@@ -6,11 +6,11 @@ module.exports = () => async (ctx) => {
   switch (ctx.match[1]) {
     case 'delete':
       ctx.tg.deleteMessage(ctx.chat.id, currentMessageId)
-      ctx.answerCbQuery()
+      ctx.answerCbQuery().catch(errorHandler)
       break
 
     case 'info':
-      ctx.answerCbQuery()
+      ctx.answerCbQuery().catch(errorHandler)
       break
 
     case 'save':
@@ -25,11 +25,11 @@ module.exports = () => async (ctx) => {
         ctx.session.old = null
         ctx.session.messages.forEach((id) => {
           if (currentMessageId !== id) {
-            ctx.tg.deleteMessage(ctx.chat.id, id)
+            ctx.tg.deleteMessage(ctx.chat.id, id).catch(errorHandler)
           }
         })
         ctx.session.messages = [currentMessageId]
-        ctx.answerCbQuery('Saved!')
+        ctx.answerCbQuery('Saved!').catch(errorHandler)
       }
       break
 
@@ -40,10 +40,10 @@ module.exports = () => async (ctx) => {
         ctx.session.new = null
         ctx.session.old = null
         ctx.session.messages.forEach((id) => {
-          ctx.tg.deleteMessage(ctx.chat.id, id)
+          ctx.tg.deleteMessage(ctx.chat.id, id).catch(errorHandler)
         })
         ctx.session.messages = []
-        ctx.answerCbQuery()
+        ctx.answerCbQuery().catch(errorHandler)
       }
       break
     default:

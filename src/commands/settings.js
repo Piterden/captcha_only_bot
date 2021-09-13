@@ -5,17 +5,19 @@ const { errorHandler, debug } = require('@/helpers')
 const { settingsButtons } = require('@/buttons')
 
 module.exports = () => async (ctx) => {
-  await ctx.deleteMessage()
+  await ctx.deleteMessage().catch(errorHandler)
 
   const chatMember = await ctx.tg.getChatMember(ctx.chat.id, ctx.from.id)
+    .catch(errorHandler)
 
   debug(chatMember)
 
   if (!['creator', 'administrator'].includes(chatMember.status)) {
     const { message_id: id } = await ctx.reply('The only admins can manage this!')
+      .catch(errorHandler)
 
     setTimeout(() => {
-      ctx.tg.deleteMessage(ctx.chat.id, id)
+      ctx.tg.deleteMessage(ctx.chat.id, id).catch(errorHandler)
     }, 2500)
     return
   }
@@ -43,7 +45,7 @@ Choose an option to edit:`,
       ...Markup.inlineKeyboard(buttons).extra(),
       parse_mode: 'Markdown',
     }
-  )
+  ).catch(errorHandler)
 
   ctx.session.messages = ctx.session.messages || []
   ctx.session.messages.push(id)

@@ -128,6 +128,6 @@ ${chat.config.captcha.messageCaptcha}`,
   }
 
   setTimeout(() => {
-    ctx.deleteMessage(ctx.message.message_id)
+    ctx.deleteMessage(ctx.message.message_id).catch(errorHandler)
   })
 }
