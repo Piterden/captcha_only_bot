@@ -1,6 +1,7 @@
 const Markup = require('telegraf/markup')
 
 const configMap = require('@/config')
+const { errorHandler } = require('@/helpers')
 const { settingsButtons } = require('@/buttons')
 const { settingsMessage } = require('@/messages')
 
