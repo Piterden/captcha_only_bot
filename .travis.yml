@@ -3,4 +3,4 @@ node_js:
   - 12
   - 14
 script:
-  - npm run lint:fix
+  - npm run lint

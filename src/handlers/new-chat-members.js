@@ -66,7 +66,7 @@ module.exports = () => async (ctx) => {
   }
 
   if (!member.is_bot) {
-    if (typeof chat.config === 'string') {
+    if (chat && typeof chat.config === 'string') {
       chat.config = JSON.parse(chat.config)
     }
     const {

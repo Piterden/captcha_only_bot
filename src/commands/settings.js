@@ -1,7 +1,7 @@
 const Markup = require('telegraf/markup')
 
 const configMap = require('@/config')
-const { errorHandler, debug } = require('@/helpers')
+const { errorHandler, debug, defaultConfig } = require('@/helpers')
 const { settingsButtons } = require('@/buttons')
 
 module.exports = () => async (ctx) => {
@@ -29,7 +29,7 @@ module.exports = () => async (ctx) => {
     .first()
     .catch(errorHandler)
 
-  const config = chat.config
+  const config = chat ? chat.config : defaultConfig
 
   ctx.session.old = config
 
