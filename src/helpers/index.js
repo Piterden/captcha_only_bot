@@ -1,16 +1,14 @@
-const { inspect } = require('util')
-
 const configMap = require('@/config')
 
 // eslint-disable-next-line no-console
 const debug = (data, name = 'DEBUG') => {
-  console.error(`${name} ${new Date}`, JSON.stringify(data, null, '  '))
+  console.error(`${name} ${new Date()}`, JSON.stringify(data, null, '  '))
   return data
 }
 
 // eslint-disable-next-line no-console
 const log = (data, name = 'LOG') => {
-  console.log(`${name} ${new Date}`, JSON.stringify(data, null, '  '))
+  console.log(`${name} ${new Date()}`, JSON.stringify(data, null, '  '))
   return data
 }
 
