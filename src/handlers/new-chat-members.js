@@ -65,16 +65,6 @@ module.exports = () => async (ctx) => {
     return
   }
 
-  // if (member.first_name.match(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]).*?\1.*?\1/g)) {
-  //   log({ member, chat }, '#SUCHKA#')
-  //   await ctx.kickChatMember(member.id).catch(errorHandler)
-  //   await ctx.deleteMessage(ctx.message.message_id).catch(errorHandler)
-  //   setTimeout(async () => {
-  //     await ctx.tg.unbanChatMember(chat.id, member.id).catch(errorHandler)
-  //   }, 1200000)
-
-  //   return
-  // }
   log({ member, chat }, '#NEW#')
 
   if (!member.is_bot) {
