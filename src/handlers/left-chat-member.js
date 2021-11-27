@@ -1,8 +1,10 @@
-const { errorHandler } = require('@/helpers')
+const { errorHandler, log } = require('@/helpers')
 
 const { BOT_USER } = process.env
 
 module.exports = () => async (ctx) => {
+  log({ member: ctx.message.left_chat_member }, '#LEFT#')
+
   if (ctx.message.left_chat_member.username === BOT_USER) {
     const date = new Date()
 
@@ -10,6 +12,7 @@ module.exports = () => async (ctx) => {
       .where({ id: Number(ctx.chat.id) })
       .update({ active: false, updated_at: date })
       .catch(errorHandler)
+    return
   }
 
   if (ctx.session.timeoutToKick) {

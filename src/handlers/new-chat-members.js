@@ -1,6 +1,6 @@
 const Markup = require('telegraf/markup')
 
-const { errorHandler, defaultConfig } = require('@/helpers')
+const { errorHandler, defaultConfig, log } = require('@/helpers')
 
 const { BOT_USER } = process.env
 
@@ -65,6 +65,18 @@ module.exports = () => async (ctx) => {
     return
   }
 
+  // if (member.first_name.match(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]).*?\1.*?\1/g)) {
+  //   log({ member, chat }, '#SUCHKA#')
+  //   await ctx.kickChatMember(member.id).catch(errorHandler)
+  //   await ctx.deleteMessage(ctx.message.message_id).catch(errorHandler)
+  //   setTimeout(async () => {
+  //     await ctx.tg.unbanChatMember(chat.id, member.id).catch(errorHandler)
+  //   }, 1200000)
+
+  //   return
+  // }
+  log({ member, chat }, '#NEW#')
+
   if (!member.is_bot) {
     if (chat && typeof chat.config === 'string') {
       chat.config = JSON.parse(chat.config)
@@ -85,10 +97,11 @@ module.exports = () => async (ctx) => {
 
     ctx.session.pass = Math.random().toString()
 
+    const config = chat ? chat.config : defaultConfig
     const name = username
       ? `@${username.replace(/([_*~])/g, '\\$1')}`
       : `[${firstName || lastName}](tg://user?id=${id})`
-    const buttonsArray = chat.config.captcha.buttons.split('\n')
+    const buttonsArray = config.captcha.buttons.split('\n')
     const correct = buttonsArray[0]
     const buttons = buttonsArray.sort(() => Math.random() - 0.5)
       .reduce((acc, button, idx) => {
@@ -108,14 +121,14 @@ module.exports = () => async (ctx) => {
       }, [])
 
     const captchaMessage = await ctx.reply(
-      `${chat.config.captcha.messageGreetings.replace('{name}', name)}
+      `${config.captcha.messageGreetings.replace('{name}', name)}
 
-${chat.config.captcha.messageCaptcha}`,
+${config.captcha.messageCaptcha}`,
       {
         ...Markup.inlineKeyboard(buttons).extra(),
         parse_mode: 'Markdown',
       }
-    )
+    ).catch(errorHandler)
 
     ctx.session.timeoutToKick = setTimeout(async () => {
       ctx.session.timeoutToKick = null
@@ -123,8 +136,8 @@ ${chat.config.captcha.messageCaptcha}`,
       await ctx.deleteMessage(captchaMessage.message_id).catch(errorHandler)
       setTimeout(async () => {
         await ctx.tg.unbanChatMember(ctx.chat.id, id).catch(errorHandler)
-      }, chat.config.captcha.unbanTimeout * 1000)
-    }, chat.config.captcha.waitingTimeout * 1000)
+      }, config.captcha.unbanTimeout * 1000)
+    }, config.captcha.waitingTimeout * 1000)
   }
 
   setTimeout(() => {

@@ -13,8 +13,12 @@ module.exports = () => async (ctx) => {
   debug(chatMember)
 
   if (!['creator', 'administrator'].includes(chatMember.status)) {
-    const { message_id: id } = await ctx.reply('The only admins can manage this!')
+    const message = await ctx.reply('The only admins can manage this!')
       .catch(errorHandler)
+    if (!message) {
+      return
+    }
+    const id = message.message_id
 
     setTimeout(() => {
       ctx.tg.deleteMessage(ctx.chat.id, id).catch(errorHandler)

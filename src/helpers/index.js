@@ -3,11 +3,16 @@ const { inspect } = require('util')
 const configMap = require('@/config')
 
 // eslint-disable-next-line no-console
-const debug = (data) => console.log(inspect(data, {
-  showHidden: true,
-  colors: true,
-  depth: Infinity,
-}))
+const debug = (data, name = 'DEBUG') => {
+  console.error(`${name} ${new Date}`, JSON.stringify(data, null, '  '))
+  return data
+}
+
+// eslint-disable-next-line no-console
+const log = (data, name = 'LOG') => {
+  console.log(`${name} ${new Date}`, JSON.stringify(data, null, '  '))
+  return data
+}
 
 // eslint-disable-next-line no-console
 const errorHandler = (error) => debug(error)
@@ -36,6 +41,7 @@ const makeUserMention = ({
   : `[${firstName || lastName}](tg://user?id=${id})`
 
 module.exports = {
+  log,
   debug,
   errorHandler,
   defaultConfig,

@@ -1,11 +1,11 @@
-const { errorHandler } = require('@/helpers')
+const { errorHandler, defaultConfig } = require('@/helpers')
 
 module.exports = () => async (ctx) => {
   const chat = await ctx.database('groups')
     .where({ id: Number(ctx.chat.id) })
     .first()
     .catch(errorHandler)
-  const config = chat.config
+  const config = chat ? chat.config : defaultConfig
 
   if (ctx.from.id !== Number(ctx.match[2])) {
     await ctx.answerCbQuery(config.captcha.notYouToast).catch(errorHandler)
@@ -31,7 +31,7 @@ module.exports = () => async (ctx) => {
       }
     ).catch(errorHandler)
 
-    await ctx.answerCbQuery(config.captcha.successToast)
+    await ctx.answerCbQuery(config.captcha.successToast).catch(errorHandler)
     await ctx.deleteMessage().catch(errorHandler)
     return null
   }
